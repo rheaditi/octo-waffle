@@ -30,6 +30,6 @@ Rooms stored as an array of `room` objects. The `room` object looks like:
 ### Todo Schema
 {
 	id: 0234, //a unique integer id
-	value: 'Paint the room red.', //todo text
+	text: 'Paint the room red.', //todo text
 	complete: false //boolean to represent done or undone
 }

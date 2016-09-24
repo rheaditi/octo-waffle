@@ -10,7 +10,23 @@
 </nav>
 
 <div class="uk-grid">
-	<div class="uk-width-1-1">
-		<h3>Room <span ng-bind="roomId"></span></h3>
+	<div class="uk-width-1-1 uk-grid uk-flex">
+		<h3 class="uk-width-2-10">Room <span ng-bind="roomId"></span></h3>
+		<form class="uk-form uk-width-8-10" ng-submit="addTodo(todoText)">
+			<input type="text" placeholder="Add a todo" class="uk-width-1-1" ng-model="todoText">
+		</form>
 	</div>
 </div>
+<div class="uk-grid ">
+	
+	<ul class="uk-list uk-list-line uk-container-center uk-width-9-10">
+		<li ng-repeat="todo in todos" class="uk-clearfix">
+		<input type="checkbox" ng-model="todo.complete" ng-change="toggleTodo(todo.id, todo.complete)" />
+		{{todo.text}}
+		<button class="uk-close uk-float-right" ng-click="deleteTodo(todo.id)"></button></li>
+	</ul>
+</div>
+
+<pre>
+	{{todos}}
+</pre>
