@@ -1,32 +1,67 @@
-<nav class="uk-navbar uk-margin-large-bottom">
-	<a class="uk-navbar-brand uk-hidden-small" href="/#/">OctoWaffle</a>
-	<div class="uk-navbar-content uk-navbar-flip uk-hidden-small">
-		<button class="uk-button uk-button-primary uk-button-small" type="button"><i class="uk-icon-plus"></i>&nbsp;&nbsp;New Room</button>
+<div class="ui grid container centered todos">
+	<div class="ui left aligned ten wide column">
+		<a ui-sref="main" class="ui basic button">
+			<i class="icon angle left"></i> All Rooms
+		</a>
 	</div>
-	<div class="uk-navbar-brand uk-visible-small">OctoWaffle</div>
-	<div class="uk-navbar-content uk-navbar-flip uk-visible-small">
-		<button class="uk-button uk-button-primary uk-button-small" type="button"><i class="uk-icon-plus"></i></button>
+	<div class="ui left aligned ten wide column">
+		<div class="ui fluid card">
+			<div class="content">
+				<button	class="red button icon labeled ui right floated" 
+						ng-click="triggerDeleteDialog()">
+					<i class="icon trash"></i>Delete Room
+				</button>
+				<div class="header" ng-bind="room.name"></div>
+				<div class="description">
+					{{room.id}}
+				</div>
+			</div>
+			<div class="extra content">
+				<form ng-submit="addTodo(newTodoText)">
+					<div class="ui fluid transparent left icon input">
+						<i class="plus icon"></i>
+						<input	type="text" 
+							placeholder="Add To-do..."
+							ng-model="newTodoText"
+							maxlength="40" minlength="3"
+							ng-minlength="3" ng-maxlength="40">
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
-</nav>
-
-<div class="uk-grid">
-	<div class="uk-width-1-1 uk-grid uk-flex">
-		<h3 class="uk-width-2-10">Room <span ng-bind="roomId"></span></h3>
-		<form class="uk-form uk-width-8-10" ng-submit="addTodo(todoText)">
-			<input type="text" placeholder="Add a todo" class="uk-width-1-1" ng-model="todoText">
-		</form>
+	<div class="ui left aligned list ten wide column">
+		<div class="item padded-item" ng-repeat="todo in todos">
+			<div class="right floated content">
+				<a class="red" ng-click="deleteTodo(todo.id)"><i class="remove icon"></i></a>
+			</div>
+			<div class="content">
+				<div class="ui checkbox">
+					<input type="checkbox" ng-model="todo.complete" ng-change="toggleTodo(todo.id, todo.complete)" />
+					<label class="strike">{{todo.text}}</label>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="uk-grid ">
-	
-	<ul class="uk-list uk-list-line uk-container-center uk-width-9-10">
-		<li ng-repeat="todo in todos" class="uk-clearfix">
-		<input type="checkbox" ng-model="todo.complete" ng-change="toggleTodo(todo.id, todo.complete)" />
-		{{todo.text}}
-		<button class="uk-close uk-float-right" ng-click="deleteTodo(todo.id)"></button></li>
-	</ul>
+<div class="ui basic modal ten wide column">
+	<div class="ui icon header">
+		<i class="trash icon"></i>
+		Delete Room?
+	</div>
+	<div class="content">
+		<p>Deleting a room is an irreversible action. Do you want to proceed?</p>
+	</div>
+	<div class="actions centered">
+		<div class="ui red basic cancel inverted button">
+			<i class="remove icon">
+			</i>
+			No. Take me back!
+		</div>
+		<div class="ui green basic ok inverted button" ng-click="deleteRoom()">
+			<i class="remove icon">
+			</i>
+			Yes. I'm sure!
+		</div>
+	</div>
 </div>
-
-<pre>
-	{{todos}}
-</pre>
