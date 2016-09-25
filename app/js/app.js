@@ -82,6 +82,17 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage'])
 		return rooms;
 	};
 
+	this.deleteRoom = function(roomId) {
+		var roomKeys = this.getAllRooms();
+		var roomStore = getRoomNamespacedStore(roomId);
+		var withDeletedRoom = _.reject(roomKeys, function(room){
+			return (parseInt(room.id) == parseInt(roomId))
+		});
+		rootStore.set('roomKeys',withDeletedRoom);
+		roomStore.remove('todos');
+		return true;
+	};
+
 	this.getRoomById = function(id){
 		var keys = rootStore.get('roomKeys');
 		var room = _.findWhere(keys, { id: parseInt(id) });

@@ -3,9 +3,9 @@
 ## Requirements 
 Build an AngularJS app which meets the following requirements
 
-- [ ] Display list of rooms as grids
+- [x] Display list of rooms as grids
 - [x] Each room should be accessed by a unique URI (Use UI router)
-- [ ] `Add room` button should add a room
+- [x] `Add room` button should add a room
 - [x] Each room could have a todo list which is specific to that room
 - [x] Store all the todo entries in local storage namespaced with room ids
 
@@ -13,7 +13,7 @@ Additional:
 
 - [ ] ngAnnotate
 - [ ] build with minify
-- [ ] Better UI, pls
+- [x] Better UI, pls
 
 ## Run Locally
 

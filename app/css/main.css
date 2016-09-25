@@ -1,3 +1,52 @@
-.room {
-	list-style: none; 
+main {
+	margin-top: 5%;
+}
+
+div.header {
+	font-size: 2.5em !important;
+}
+
+.padded-item {
+	padding: 20px 0px 20px 20px !important;
+}
+
+
+.padded-item:hover {
+	border-left-style: solid;
+    border-left-width: 5px;
+    border-left-color: #2ecc71;
+    background-color: rgba(46, 204, 113,0.05);
+}
+
+.padded-item a {
+	color: rgba(0, 0, 0, 0.4) !important;
+	padding-right: 20px;
+}
+
+.todos label {
+	padding-left: 40px !important;
+	font-size: 1.5em !important;
+}
+
+.todos {
+	word-wrap: break-word; 
+	word-break: break-all;
+}
+
+.modal .content p {
+	text-align: center;
+}
+
+.modal .actions {
+	text-align: center !important;
+}
+
+input[type=checkbox]:checked + label.strike{
+  text-decoration: line-through;
+  color: #bdc3c7;
+}
+
+.ui.item.menu .padded-menu{
+	padding-left: 15% !important;
+	padding-right: 15% !important;
 }
