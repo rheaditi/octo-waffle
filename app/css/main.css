@@ -1,5 +1,5 @@
-main {
-	margin-top: 5%;
+.top-margin {
+	margin-top: 20px !important;
 }
 
 div.header {
@@ -46,7 +46,7 @@ input[type=checkbox]:checked + label.strike{
   color: #bdc3c7;
 }
 
-.ui.item.menu .padded-menu{
-	padding-left: 15% !important;
-	padding-right: 15% !important;
+#newRoomField {
+	padding-top: 20px !important;
+	padding-bottom: 20px !important;
 }

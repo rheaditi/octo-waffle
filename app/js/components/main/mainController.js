@@ -1,7 +1,16 @@
 angular.module('octoWaffle')
-.controller('MainController', function($scope, RoomStorageService, $state){
+.controller('MainController', function($scope, RoomStorageService, $state, toasty){
 	$scope.rooms = RoomStorageService.getAllRooms();
-	console.log($scope.rooms);
+	$scope.deleteConfirmModal = $('#delete-confirm-modal');
+
+	var deleteRoom = function(roomId, roomName) {
+		var deleted = RoomStorageService.deleteRoom(roomId);
+		$scope.$apply(function(){
+			$scope.rooms = RoomStorageService.getAllRooms();
+			toasty.info({title: 'Deleted \'' + roomName +'\'', msg:'Room #'+roomId});
+		});
+	};
+
 	$scope.moveToRoom = function (roomId){
 		$state.go('room', { id: roomId});
 	};
@@ -16,24 +25,29 @@ angular.module('octoWaffle')
 		$scope.newRoomName = "";
 	};
 
-	$scope.deleteRoom = function (roomId){
-		console.log('trying to delete room: ' + roomId);
-	};
-
 	$scope.addTodoToRoom = function(roomId, todoText){
 		var todo = RoomStorageService.addTodo(roomId, todoText.trim());
-		console.log("Adding " + todoText + " To room " + roomId);
-		if(!todo){
+		if(todo){
+			this.newTodo = null;
+			console.log($scope.newTodo);
+			toasty.info({title: 'Added Todo!', msg:'\'' + todoText.trim() + '\' to Room #'+roomId});
+		}
+		else{
 			console.log('Error adding todo for Room '+roomId+'. Returned:');
 			return console.log(todo);
 		}
-		$scope.newTodo = "";
-		$('.ui.success.message').show();
+		
+		
 	};
 
-	$scope.deleteRoom = function(roomId) {
-		console.log('deleting?');
-		var deleted = RoomStorageService.deleteRoom(roomId);
-		$scope.rooms = RoomStorageService.getAllRooms();
+	$scope.triggerDeleteDialog = function(roomId, roomName){
+		$scope.deleteConfirmModal.modal({
+			closable: false,
+			onApprove: function (){
+				deleteRoom(roomId, roomName);
+			},
+			allowMultiple: false
+		});
+		$scope.deleteConfirmModal.modal('show');
 	};
 });

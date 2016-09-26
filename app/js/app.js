@@ -1,5 +1,5 @@
-angular.module('octoWaffle', ['ui.router', 'angular-storage'])
-.config(function($stateProvider, $urlRouterProvider){
+angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
+.config(function($stateProvider, $urlRouterProvider, toastyConfigProvider){
 	$urlRouterProvider.otherwise('/');
 
 	$stateProvider
@@ -9,7 +9,7 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage'])
 			controller: 'MainController'
 		})
 		.state('room', {
-			url: '/room/:id',
+			url: '/room/{id:int}',
 			templateUrl: 'js/components/room/room.html',
 			controller: 'RoomController',
 			resolve: {
@@ -18,6 +18,19 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage'])
 				}
 			}
 		})
+		.state('404', {
+			url: '/404',
+			templateUrl: 'js/components/404/404.html',
+			controller: '404Controller'
+		})
+
+	toastyConfigProvider.setConfig({
+        sound: false,
+        shake: false,
+        html: true,
+        type: 'info',
+        position: 'top-right'
+    });
 	
 })
 .service('RoomStorageService', function(store){

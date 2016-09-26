@@ -1,7 +1,26 @@
 angular.module('octoWaffle')
 .controller('RoomController', function($scope, roomDetails, RoomStorageService, $state){
+	if(!roomDetails){
+		$state.go('404');
+	}
 	$scope.room = roomDetails;
 	$scope.todos = RoomStorageService.getAllTodosForId(roomDetails.id);
+	$scope.deleteConfirmModal = $('#delete-confirm-modal');
+	$scope.deleteConfirmModal.modal({
+			closable: false,
+			onApprove: function (){
+				deleteRoom();
+			},
+			allowMultiple: false
+		});
+
+	var deleteRoom = function() {
+		var deleted = RoomStorageService.deleteRoom(roomDetails.id);
+		if(deleted){
+			$state.go('main');
+		}
+	};
+
 	$scope.addTodo = function(todoText){
 		if ($scope.newTodoText.length) {
 			var roomId = $scope.room.id;
@@ -24,14 +43,9 @@ angular.module('octoWaffle')
 		$scope.todos = RoomStorageService.getAllTodosForId(roomDetails.id);
 	};
 
-	$scope.triggerDeleteDialog = function(){
-		$('.ui.basic.modal').modal('show');
+	$scope.triggerDeleteDialog = function(){	
+		$scope.deleteConfirmModal.modal('show');
 	};
 
-	$scope.deleteRoom = function() {
-		var deleted = RoomStorageService.deleteRoom(roomDetails.id);
-		if(deleted){
-			$state.go('main');
-		}
-	};
+	
 });

@@ -1,44 +1,68 @@
-<div class="ui success message">
-  <i class="close icon"></i>
-  <div class="header">
-    Your user registration was successful.
-  </div>
-  <p>You may now log-in with the username you have chosen</p>
-</div>
-
-<div class="ui centered grid fluid stacked">
-	<div class="ui cards">
-	  <div class="card four wide column" ng-repeat="room in rooms track by $index" >
-	    <div class="content left aligned">
-	    	<div class="right floated meta"><a ng-click="deleteRoom(room.id)"><i class="remove icon"></i></a></div>
-	      <a class="header" ng-click="moveToRoom(room.id)">
-	        <span ng-bind="room.name"></span>
-	      </a>
-	      <div class="meta">
-	        Room ID: {{room.id}}
-	      </div>
-	    </div>
-	    <div class="extra content center aligned">
-			<div class="ui action input fluid">
-			  <input type="text" placeholder="Add a to-do to this room" ng-model="newTodo">
-			  <button class="ui teal right button icon" ng-click="addTodoToRoom(room.id, newTodo)"><i class="plus icon"></i></button>
-			</div> 
+<div class="ui three stackable doubling cards container top-margin" ng-if="rooms.length">
+	<div ng-repeat="room in rooms track by $index" class="card">
+		<div class="content left aligned">
+			<div class="right floated meta"><a ng-click="triggerDeleteDialog(room.id, room.name)"><i class="remove icon"></i></a></div>
+			<a class="header teal" ng-click="moveToRoom(room.id)">
+				<span ng-bind="room.name"></span>
+			</a>
+			<div class="meta"> Room ID: <span ng-bind="room.id"></span> </div>
 		</div>
-	  </div>
+		<form class="extra content ui form" ng-submit="addTodoToRoom(room.id, newTodo)">
+			<div class="ui action input fluid">
+			  <input	type="text" 
+			  			placeholder="Add a to-do to this room" ng-model="newTodo"
+			  			maxlength="40" minlength="3"
+						ng-minlength="3" ng-maxlength="40" 
+						required="true"/>
+			  <button type="submit" class="ui button teal right icon"><i class="plus icon"></i></button>
+			</div>
+		</form>
 	</div>
 </div>
 
-<div class="ui teal inverted bottom fixed menu one item menu">
-	<div class="item padded-menu">
-		<div class="ui right labeled left icon input">
-			<i class="plus icon"></i>
+<div ng-if="!rooms.length" class="ui middle aligned grid">
+	<div class="column">
+		<img src="images/safebox.svg" alt="Oops. Nothing here!" class="ui centered medium image">
+		<h2 class="ui header centered">Oops. Nothing here.</h2>
+		<h2 class="ui sub header centered">Add a room to track your to-dos.</h2>
+	</div>
+</div>
+
+<div class="ui fluid one item menu teal inverted bottom fixed pad-sticky">
+	<form class="ui form item grid container" ng-submit="addRoom(newRoomName)">
+		<div class="ui input field fluid right labeled" id="newRoomField">
 			<input	type="text" placeholder="Enter Room Name" 
 					ng-model="newRoomName"
 					maxlength="25" minlength="3"
-					ng-minlength="3" ng-maxlength="25">
+					ng-minlength="3" ng-maxlength="25"
+					required="true">
 			<a class="ui tag label" ng-click="addRoom(newRoomName)">
 				Create Room
 			</a>
 		</div>
+	</form>
+</div>
+
+<div class="ui basic modal ten wide column" id="delete-confirm-modal">
+	<div class="ui icon header">
+		<i class="trash icon"></i>
+		Delete Room?
+	</div>
+	<div class="content">
+		<p>Deleting a room is an irreversible action. Do you want to proceed?</p>
+	</div>
+	<div class="actions centered">
+		<div class="ui red basic cancel inverted button">
+			<i class="remove icon">
+			</i>
+			No. Take me back!
+		</div>
+		<div class="ui green basic ok inverted button" ng-click="deleteRoom()">
+			<i class="remove icon">
+			</i>
+			Yes. I'm sure!
+		</div>
 	</div>
 </div>
+
+<toasty></toasty>

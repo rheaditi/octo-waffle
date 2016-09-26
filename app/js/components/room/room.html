@@ -13,7 +13,7 @@
 				</button>
 				<div class="header" ng-bind="room.name"></div>
 				<div class="description">
-					{{room.id}}
+					Room ID #<span ng-bind="room.id"></span>
 				</div>
 			</div>
 			<div class="extra content">
@@ -24,13 +24,22 @@
 							placeholder="Add To-do..."
 							ng-model="newTodoText"
 							maxlength="40" minlength="3"
-							ng-minlength="3" ng-maxlength="40">
+							ng-minlength="3" ng-maxlength="40"
+							required="true">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="ui left aligned list ten wide column">
+	<div class="ui left aligned list ten wide column" ng-if="!todos.length">
+
+		<div class="column">
+			<img src="images/paper-plane.svg" alt="Oops. Nothing here!" class="ui centered medium image">
+			<h2 class="ui header centered">Oops. Nothing here.</h2>
+			<h2 class="ui sub header centered">Add some to-dos :)</h2>
+		</div>
+	</div>
+	<div class="ui left aligned list ten wide column" ng-if="todos.length">
 		<div class="item padded-item" ng-repeat="todo in todos">
 			<div class="right floated content">
 				<a class="red" ng-click="deleteTodo(todo.id)"><i class="remove icon"></i></a>
@@ -38,13 +47,13 @@
 			<div class="content">
 				<div class="ui checkbox">
 					<input type="checkbox" ng-model="todo.complete" ng-change="toggleTodo(todo.id, todo.complete)" />
-					<label class="strike">{{todo.text}}</label>
+					<label class="strike" ng-bind="todo.text"></label>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="ui basic modal ten wide column">
+<div class="ui basic modal ten wide column" id="delete-confirm-modal">
 	<div class="ui icon header">
 		<i class="trash icon"></i>
 		Delete Room?
