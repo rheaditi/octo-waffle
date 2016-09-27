@@ -34,8 +34,8 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
 	
 })
 .service('RoomStorageService', function(store){
-	const MAX_ROOMS = 10;
-	const MAX_TODOS_PER_ROOM = 10;
+	const MAX_ROOMS = 50;
+	const MAX_TODOS_PER_ROOM = 150;
 	const rootStore = store.getNamespacedStore('octoWaffle');
 	var roomKeys = rootStore.get('roomKeys') || [];
 
@@ -56,7 +56,7 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
 	};
 
 	var getNewTodoKeyForRoom = function(roomStore){
-		todos = roomStore.get('todos');
+		var todos = roomStore.get('todos');
 		var possible = Math.ceil(Math.random() * MAX_TODOS_PER_ROOM);
 		if(todos.length >= MAX_TODOS_PER_ROOM){
 			return -1;
@@ -117,6 +117,9 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
 		var roomTodos = this.getAllTodosForId(parseInt(id));
 
 		var todoKey = getNewTodoKeyForRoom(roomStore);
+		if(todoKey===-1){
+			return null;
+		}
 		var newTodo = {
 			id: todoKey,
 			text: description,

@@ -1,5 +1,5 @@
 angular.module('octoWaffle')
-.controller('RoomController', function($scope, roomDetails, RoomStorageService, $state){
+.controller('RoomController', function($scope, roomDetails, RoomStorageService, $state, toasty){
 	if(!roomDetails){
 		$state.go('404');
 	}
@@ -26,6 +26,7 @@ angular.module('octoWaffle')
 			var roomId = $scope.room.id;
 			var todo = RoomStorageService.addTodo(roomId, todoText.trim());
 			if(!todo){
+				toasty.error({title: 'Todo not Added', msg: 'Maximum limit reached.'});
 				console.log('Error adding todo for Room '+roomId+'. Returned:');
 				return console.log(todo);
 			}
@@ -46,6 +47,4 @@ angular.module('octoWaffle')
 	$scope.triggerDeleteDialog = function(){	
 		$scope.deleteConfirmModal.modal('show');
 	};
-
-	
 });

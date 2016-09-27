@@ -19,6 +19,7 @@ angular.module('octoWaffle')
 		var newlyAddedRoom = RoomStorageService.createRoom(roomName);
 		
 		if(!newlyAddedRoom){
+			toasty.error({title: 'Room not Created', msg: 'Maximum limit reached.'});
 			return console.log('Room Creation Failed.');
 		}
 		$scope.rooms = RoomStorageService.getAllRooms();
