@@ -1,6 +1,6 @@
 angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
 .config(function($stateProvider, $urlRouterProvider, toastyConfigProvider){
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/404');
 
 	$stateProvider
 		.state('main', {

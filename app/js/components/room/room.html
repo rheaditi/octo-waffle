@@ -32,14 +32,13 @@
 		</div>
 	</div>
 	<div class="ui left aligned list ten wide column" ng-if="!todos.length">
-
 		<div class="column">
 			<img src="images/paper-plane.svg" alt="Oops. Nothing here!" class="ui centered medium image">
 			<h2 class="ui header centered">Oops. Nothing here.</h2>
 			<h2 class="ui sub header centered">Add some to-dos :)</h2>
 		</div>
 	</div>
-	<div class="ui left aligned list ten wide column" ng-if="todos.length">
+	<div class="ui left aligned list ten wide column " ng-if="todos.length">
 		<div class="item padded-item" ng-repeat="todo in todos">
 			<div class="right floated content">
 				<a class="red" ng-click="deleteTodo(todo.id)"><i class="remove icon"></i></a>
