@@ -20,8 +20,7 @@ angular.module('octoWaffle', ['ui.router', 'angular-storage', 'angular-toasty'])
 		})
 		.state('404', {
 			url: '/404',
-			templateUrl: 'js/components/404/404.html',
-			controller: '404Controller'
+			templateUrl: 'js/components/404/404.html'
 		})
 
 	toastyConfigProvider.setConfig({
